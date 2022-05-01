@@ -1,0 +1,44 @@
+Radu Sabina - 331CB - Tema3 SO
+
+1) Organizare:
+
+Tema a avut ca scop implementarea unui loader de fisiere executabile, sub 
+forma unei biblioteci dinamice. Structura acestui executabil s-a bazat pe 
+formatul ELF pentru Linux. Abordarea generala este astfel:
+Initializez loaderul si specific handlerul pentru semnalul SIGSEGV.
+Deschid fisierul binar exacutabil si apoi il parsez.
+Daca primim altceva in afara de semnalul SIGSEGV, apelez handlerul vechi.
+In executabil, ii parcurg segmentele de memorie.
+In functie de page-faulturile generate, tratez situatia dupa caz. Astfel, daca 
+pagina e mapata, chemam handler vechi si daca pagina nu e mapata, atunci o 
+mapez cu toate specificatiile necesare. De asemenea, accesul necorespunzator 
+duce la segfault, iar daca adresa paginii cautate nu a fost gasita, apelez 
+handlerul vechi.
+Ma asigur ca fiecare pagina e mapata unde trebuie (in functie de offset, 
+adresa virtuala a fiecarui segment, indexul paginii si dimensiunea si 
+dimensiunea fisierului.
+Am folosit o structura externa ce contine un vector de pagini mapate si 
+numarul lor.
+
+Din punctul meu de vedere, tema este foarte utila. Cat despre implementarea 
+mea, consider ca este destul de decenta.
+
+2) Implementare:
+
+Pe linux, intregul enunt este implementat. Nu am functionalitati in plus. 
+Testele sunt legate intre ele.
+
+3) Compilare si rulare:
+
+compilare: make
+rulare: se utilizeaza biblioteca obtinuta in urma compilarii
+checker: make -f Makefile.checker
+clean: make clean
+
+4) Bibliografie:
+
+https://ocw.cs.pub.ro/courses/so/laboratoare/laborator-06
+https://ocw.cs.pub.ro/courses/so/cursuri/curs-05
+https://ocw.cs.pub.ro/courses/so/cursuri/curs-06
+https://ocw.cs.pub.ro/courses/so/cursuri/curs-07
+
